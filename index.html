@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bookly - Book Reader</title>
+    <!-- Required Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/88221c6c3b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <img src="./BooklyLogo.png" class="responsive">
+            </div>
+        </div>
+        <div class="row">
+            <!-- Main Content Area -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <h2 class="card-header" id="fileName">Book Title</h2>
+                    <!-- Select Menu for Voice -->
+                    <h6 class="card-subtitle my-2">Speech to Text</h6>
+                    <select id="voices" class="form-select bg-secondary text-light"></select>
+                    <div>
+                        <button id="start" class="btn btn-success mt-3 me-3">Start</button>
+                        <button id="pause" class="btn btn-warning mt-3 me-3">Pause</button>
+                        <button id="resume" class="btn btn-info mt-3 me-3">Resume</button>
+                        <button id="cancel" class="btn btn-danger mt-3 me-3">Cancel</button>
+                      </div>
+                      <hr class="mb-0">
+                    <div class="card-body pt-0">
+                        <div class="displayBox scroll-box" id="fileContent">
+                            Select a book on the right
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <a href="https://chrismooney.us" target="blank"><i class="fa fa-copyright" aria-hidden="true"></i> Chris Mooney</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="col-md-4">
+                <!--Search Widget-->
+                <div class="card mb-4">
+                    <h5 class="card-header">Search</h5>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="keyword" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button" onclick="performMark()">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-footer" id="searchStat">
+                    </div>
+                </div>
+                <!-- Select a Book Widget -->
+                <div class="card">
+                    <h5 class="card-header">Select a Book</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#" onclick="loadBook('AliceInWonderland.txt', 'Alice In Wonderland')">Alice in Wonderland</a></li>
+                                    <li><a href="#" onclick="loadBook('Dracula.txt', 'Dracula')">Dracula</a></li>
+                                    <li><a href="#" onclick="loadBook('GrimmFairyTales.txt', `Grimm's Fairy Tales`)">Grimm's Fairy Tales</a></li>
+                                    <li><a href="#" onclick="loadBook('JekyllAndHyde.txt', 'Dr. Jekyll and Mr. Hyde')">Dr Jekyll and Mr. Hyde</a></li>
+                                    <li><a href="#" onclick="loadBook('TheGreatGatsby.txt', 'The Great Gatsby')">The Great Gatsby</a></li>
+                                    <li><a href="#" onclick="loadBook('LOTR.txt', 'The Lord of the Rings')">The Lord of the Rings</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Most Used Words-->
+                <div class="card my-4">
+                    <h5 class="card-header">Most Used Words</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-unstyled mb-0" id="mostUsed">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Least Used Words -->
+                <div class="card my-4">
+                    <h5 class="card-header">Least Used Words</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled mb-0" id="leastUsed">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Document Stats-->
+                <div class="card my-4">
+                    <h5 class="card-header">Document Stats</h5>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li id="docLength"></li>
+                            <li id="wordCount"></li>
+                            <li id="charCount"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script id="template-ul-items" type="text/template">
+        <li>
+           {{val}}
+        </li>  
+    </script>
+    
+  <!-- JavaScript -->
+  <script src="./searchString.js"></script>
+  <script src="./textToSpeech.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>  
+</body>
+</html>
