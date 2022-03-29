@@ -6,6 +6,7 @@ speech.lang = 'en'
 
 let voices = [] // Global array of available voices
 
+voices = window.speechSynthesis.getVoices()
 window.speechSynthesis.onvoiceschanged = () => {
 	// Get list of voices
 	voices = window.speechSynthesis.getVoices()
